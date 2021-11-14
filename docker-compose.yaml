@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  backend:
+    container_name: backend
+    build: ./backend
+    volumes:
+    - ./backend:/backend
+    env_file:
+      - ./backend/backend.env
+    # depends_on:
+    #   - "mongo"
+    #   - "medium_envoy"
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    volumes:
+      - data:/data/db
+    ports:
+      - "27017:27017"
+  medium_envoy:
+    container_name: medium_envoy
+    build: ./envoy
+    ports:
+      - '8000:8000'
+volumes:
+  data:
